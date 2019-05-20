@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <title>考反應遊戲</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+
+    /*變量 */
+    /* :root {
+
+      --bound: 80px;
+
+    } */
+
+    body {
+
+      background-color: rgba(255, 94, 100, 0.5);
+      color : #FF3864;
+
+    }
+
+    .bold {
+
+      font-weight: bold;
+
+    }
+
+    #box {
+
+      width: 140px;
+      /* width: var(--bound); */
+      height: 140px;
+      /* height: var(--bound); */
+
+      background-color: red;
+
+      display: none;
+      position: relative;
+
+    }
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+  <h1>考考你的反應!</h1>
+  <p class="bold">反應時間 : <span id="time">0</span>秒</p>
+
+  <div id="box"></div>
+
+  <script type="text/javascript">
+
+
+    var creatdTime;
+    var clickedTime;
+    var reactionTime;
+
+    function getRandomColor() {
+
+      var max = 200;
+      var min = 50;
+
+      var green = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      var color = "rgba(255, " + green + ", 100, 1.0)";
+
+
+      return color;
+      }
+
+    function makeBox() {
+
+      var time = Math.random();
+      time = time * 2000;
+
+      setTimeout(function() {
+
+        if (Math.random() >= 0.5) {
+          document.getElementById('box').style.borderRadius = "70px";
+        } else {
+          document.getElementById('box').style.borderRadius = "0px";
+        } //隨機圖形
+
+        // console.log(window.innerWidth);
+        // console.log(window.innerHeight);
+        //
+        // console.log(document.documentElement.clientWidth);
+        // console.log(document.documentElement.clientHeight);
+
+        var min = 0;
+        var max = window.innerHeight - 280 ; //扣除圖形以及文字高度
+
+        var top = Math.floor(Math.random() * (max - min +1)) +min;
+
+        min = 0;
+        max = window.innerWidth - 140;
+
+        // var dynamicBound;
+        // if (window.innerWidth > window.innerHeight) {
+        //
+        //   dynamicBound = window.innerWidth / 8 ;
+        //   console.log("Width:" + dynamicBound);
+        //
+        // } else {
+        //
+        //   dynamicBound = window.innerHeight / 8 ;
+        //   console.log("Height:" + dynamicBound);
+        //
+        // }
+        //
+        // dynamicBound = dynamicBound + "px" ; //動態變量
+        // document.documentElement.style.setProperty("--bound", dynamicBound);
+
+        var left = Math.floor(Math.random() * (max - min +1)) +min;
+
+        document.getElementById('box').style.top = top + "px";  //隨機位置
+        document.getElementById('box').style.left = left + "px";  //隨機位置
+
+        document.getElementById('box').style.backgroundColor = getRandomColor();
+        document.getElementById('box').style.display = "block";
+        creatdTime = Date.now();
+      }, time);  // (function , ms)
+
+
+
+    }
+
+    document.getElementById('box').onclick = function() {
+
+      this.style.display = "none";
+      clickedTime = Date.now();
+      reactionTime = (clickedTime - creatdTime) / 1000; //單位 s
+      document.getElementById('time').innerHTML = reactionTime;
+
+      makeBox();
+    }
+
+    makeBox();
+
+
+  </script>
+
+
+</body>
+</html>
